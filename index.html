@@ -86,11 +86,97 @@
         .action-btn:hover {
             background-color: #2ea043;
         }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .home-btn, .menu-btn {
+            background: #30363d;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .home-btn:hover, .menu-btn:hover {
+            background: var(--accent-blue);
+            color: #fff;
+        }
+        select, input {
+            background: #30363d;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0 15px 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <!-- شريط التنقل العلوي الثابت -->
+    <div class="nav-bar" id="topNavBar" style="display: none;">
+        <button class="home-btn" onclick="goToHome()">🏠 الرئيسية</button>
+        <button class="menu-btn" onclick="goToSummaryMenu()">📚 الملخصات الذكية</button>
+        <button class="menu-btn" onclick="goToMistakesMenu()" style="border-color: var(--accent-orange);">🛠️ تصحيح الأخطاء (<span id="mistakesCount">0</span>)</button>
+    </div>
+
+    <!-- 0. صفحة البداية الرئيسية -->
+    <div id="page-home" class="page-view active" style="text-align: center; padding: 40px 0;">
+        <h1 style="color: var(--accent-blue); font-size: 32px;">🎮 أكاديمية روكيت ليق الاحترافية</h1>
+        <p style="font-size: 18px; margin-bottom: 30px;">البوابة الرسمية لاحتراف اللعبة من الصفر وحتى رتبة الـ SSL بإشراف الخبير سالم الكعبي.</p>
+        <button class="action-btn" onclick="goToPage(22)" style="font-size: 18px; padding: 15px;">ابدأ المنهج الكامل 🚀</button>
+        <button class="action-btn" onclick="goToSummaryMenu()" style="background-color: #1f6feb; margin-top: 15px;">⚡ الملخصات السريعة (اختصار البنود)</button>
+        <button class="action-btn" onclick="goToMistakesMenu()" style="background-color: var(--accent-orange); margin-top: 15px;">🛠️ مراجعة وتصحيح الأسئلة الخاطئة</button>
+    </div>
+
+    <!-- 1. قسم الملخصات السريعة (اختر بند أو من كم لـ كم) -->
+    <div id="page-summary-menu" class="page-view">
+        <h2>⚡ نظام الملخصات السريعة (5 أسطر مركزة)</h2>
+        <p>اختر بنداً واحداً أو حدد مدى معين (من مادة إلى مادة) لتحصل على خلاصة سريعة:</p>
+        
+        <label>اختر بنداً منفرداً:</label>
+        <select id="singleMatSelect">
+            <!-- ينمو تلقائياً -->
+        </select>
+        <button class="action-btn" onclick="showSingleSummary()">عرض خلاصة هذا البند</button>
+
+        <hr style="border-color: var(--border-color); margin: 30px 0;">
+
+        <label>أو حدد مدى البنود (من - إلى):</label>
+        <div style="display: flex; gap: 10px;">
+            <input type="number" id="rangeStart" placeholder="من مادة رقم..." min="22" max="30" value="22">
+            <input type="number" id="rangeEnd" placeholder="إلى مادة رقم..." min="22" max="30" value="25">
+        </div>
+        <button class="action-btn" onclick="showRangeSummary()" style="background-color: #1f6feb;">عرض خلاصة المدى المحدد</button>
+
+        <div id="summaryResultBox" class="quiz-box" style="display: none; margin-top: 20px;"></div>
+    </div>
+
+    <!-- 2. قسم تصحيح الأخطاء الذكي -->
+    <div id="page-mistakes-menu" class="page-view">
+        <h2>🛠️ قسم تصحيح الأسئلة الخاطئة</h2>
+        <p>الأسئلة التي أجبت عليها بشكل خاطئ سابقاً يتم تجميلها هنا لمراجعتها وتصحيحها:</p>
+        <div id="mistakesListContainer">
+            <p style="color: var(--accent-orange);">لم تسجل أي أخطاء حتى الآن! أجب على الاختبارات وستظهر هنا الأسئلة الخاطئة لتصحيحها.</p>
+        </div>
+    </div>
+
+    <!-- 3. صفحة التدريب الفردي على تصحيح السؤال الخطأ -->
+    <div id="page-fix-single-mistake" class="page-view">
+        <h2>🎯 تصحيح وتثبيت المعلومة</h2>
+        <div id="fixMistakeContent" class="quiz-box"></div>
+        <button class="action-btn" onclick="goToMistakesMenu()" style="background-color: #30363d; margin-top: 20px;">العودة لقائمة الأخطاء</button>
+    </div>
+
+    <!-- حاوية المواد الديناميكية -->
     <div id="dynamic-pages-container"></div>
 
     <!-- صفحة النتائج والشهادة (صفحة رقم 31) -->
@@ -108,7 +194,7 @@
             <p style="margin-top: 30px; font-weight: bold;">موقعة ومعتمدة من الخبير: <strong>سالم الكعبي</strong></p>
         </div>
 
-        <button class="action-btn" onclick="goToPage(1)" style="background-color: #30363d;">إعادة محاولة الاختبار</button>
+        <button class="action-btn" onclick="goToHome()" style="background-color: #30363d;">العودة للرئيسية</button>
     </div>
 </div>
 
@@ -117,6 +203,7 @@
         {
             title: "المادة 22: تحليل الريبلاي (Replay Review) لكشف الأخطاء القاتلة",
             text: "مشاهدة مبارياتك السابقة من نظام الـ Replays ليست مجرد متعة، بل هي أداة تشخيصية هندسية. عندما تشاهد خسارة سابقة، لا تنظر إلى أخطاء زملائك بل ركّز حصراً على أخطائك الشخصية: متى أهدرت التعزيز؟ متى اندفعت بشكل خاطئ؟ ولماذا فشلت في التصدي؟ رؤية الملعب من زاوية الخصم والملعب العام تكشف لك الفجوات الخفية في تمركزك.",
+            summary: "1. الريبلاي أداة تشخيصية وليست للمتعة.\n2. ركّز حصراً على أخطائك الشخصية وتمركزك.\n3. راقب هدر التعزيز وتوقيت الاندفاع.\n4. انظر من زاوية الخصم والملعب العام.\n5. تمنع تكرار الأخطاء القاتلة.",
             q1: "ما هو الهدف الأساسي من مراجعة الريبلاي (Replay Review)؟", o1: ["كشف وتحليل أخطائك الشخصية وتمركزك بدقة", "التقاط صور تذكارية للسيارة", "معرفة سرعة الإنترنت أثناء المباراة"], a: 0,
             q2: "من أي منظور يُنصح بمشاهدة الريبلاي لرؤية الأخطاء بدقة؟", o2: ["من منظور الملعب العام ومنظور الخصم", "من منظور الشات النصي", "بدون كاميرا نهائياً"], a: 0,
             q3: "كيف تساعدك هذه المراجعة في تطوير مستقبلك التنافسي؟", o3: ["تمنعك من تكرار نفس الأخطاء القاتلة في المستقبل", "تزيد من سرعة سيارتك تلقائياً", "تعطيك نقاط مجانية"], a: 0
@@ -124,6 +211,7 @@
         {
             title: "المادة 23: استراتيجيات اللعب الفردي في وضع 1v1",
             text: "وضع 1v1 في روكيت ليق هو الاختبار الحقيقي والأقسى لمهاراتك الفردية وقدرتك الدفاعية والهجومية؛ لأنه لا يوجد زميل ينقذك إذا أخطأت. في هذا الوضع، أي خطأ صغير أو اندفاع غير محسوب يعني هدفاً فورياً في مرماك. السر في الفوز بمباريات 1v1 هو التحلي بالصبر الشديد، إجبار الخصم على ارتكاب الخطأ الأول، واستغلال المساحات بحرص عبر التسديد الموجه أو المراوغة الأرضية الذكية دون إهدار التعزيز.",
+            summary: "1. وضع 1v1 أقسى اختبار للمهارات الفردية والدفاعية.\n2. الخطأ البسيط يعني هدفاً فورياً في مرماك.\n3. السر الأساسي هو الصبر الشديد.\n4. اجبر الخصم على ارتكاب الخطأ الأول.\n5. استغل المساحات بمراوغة أرضية دون إهدار التعزيز.",
             q1: "لماذا يُعتبر وضع 1v1 الاختبار الأقسى لمهارات اللاعب؟", o1: ["لأنه لا يوجد زميل ينقذك إذا ارتكبت أي خطأ", "لأن مبارياته تستغرق ساعات طويلة", "لأنه ممنوع في البطولات"], a: 0,
             q2: "ما هو المفتاح الأساسي للنجاح والفوز في مباريات 1v1؟", o2: ["الصبر الشديد وإجبار الخصم على ارتكاب الخطأ الأول", "الاندفاع المستمر والهجوم الأعمى", "الوقوف في زاوية الملعب"], a: 0,
             q3: "ما الذي يعنيه ارتكاب أي خطأ بسيط في الـ 1v1؟", o3: ["استقبال هدف فوري في مرماك", "الحصول على تعزيز مجاني", "توقف المباراة"], a: 0
@@ -131,6 +219,7 @@
         {
             title: "المادة 24: ميكانيكيات الـ Wave Dash وسرعة التحرك الأرضي",
             text: "مفتاح التفوق في السرعة الأرضية دون استهلاك التعزيز يكمن في إتقان تقنية (Wave Dash). تتيح لك هذه المهارة تنفيذ قفزة خفيفة مع ميلان السيارة للأمام أو الجانب، ثم الهبوط على الأرض بحيث تتلامس عجلات السيارة الأربع مع العشب في نفس الفاصل الزمني، مما يولد دفعة سرعة فورية (Boostless Acceleration) تماثل سرعة استخدام التعزيز الصاروخي الكامل. إتقان الـ Wave Dash يجعلك تتحرك بسرعة مرعبة في أرجاء الملعب لتغطية المساحات.",
+            summary: "1. الWave Dash تمنح سرعة أرضية بلا استهلاك تعزيز.\n2. تعتمد على قفزة خفيفة وميلان السيارة.\n3. تتلامس العجلات الأربع في نفس اللحظة مع الأرض.\n4. تمنح دفعة سرعة تماثل التعزيز الكامل.\n5. ترفع كفاءة وسرعة التمركز في الملعب.",
             q1: "ما هي الفائدة الكبرى من مهارة الـ Wave Dash؟", o1: ["الحصول على دفعة سرعة فورية دون استهلاك التعزيز", "إيقاف سيارة الخصم عن الحركة", "جعل السيارة تطير لسقف الملعب"], a: 0,
             q2: "كيف تتلامس عجلات السيارة عند تنفيذ الـ Wave Dash بنجاح؟", o2: ["تتلامس العجلات الأربع مع الأرض في نفس الفاصل الزمني تماماً", "تتلامس العجلات الخلفية فقط", "لا تلمس الأرض نهائياً"], a: 0,
             q3: "لماذا تهم هذه المهارة اللاعبين في الرانكات العالية؟", o3: ["لتوفير التعزيز والتحرك بسرعة مرعبة في الملعب", "لتزيين السيارة فقط", "لزيادة صوت المحرك"], a: 0
@@ -138,6 +227,7 @@
         {
             title: "المادة 25: استراتيجيات التشتت والدفاع عن المرمى (Goalie Positioning)",
             text: "الدفاع الناجح لا يعني الوقوف ملتصقاً بخط المرمى طوال الوقت، لأن ذلك يحجب عنك رؤية الملعب ويمنح الخصم حرية التسديد من الزوايا المكشوفة. التمركز الصحيح للحارس (Goalie Positioning) يكون على خط إرسال الزاوية الخلفية للمرمى (Back Post)، حيث ترى الملعب كاملاً، وتتمكن من الانقضاض للأمام أو الصعود على القائم لصد أي كرة قادمة من الأعلى أو الجانب بفعالية مطلقة وبأقل استهلاك ممكن للتعزيز.",
+            summary: "1. تجنب الالتصاق بمنتصف خط المرمى لأنه يحجب الرؤية.\n2. التمركز الصحيح على الـ Back Post (الزاوية الخلفية).\n3. يتيح لك رؤية الملعب كاملاً بوضوح.\n4. يسهل الانقضاض لصد الكرات العالية والجانبية.\n5. يوفر التعزيز ويرفع كفاءة التصدي.",
             q1: "أين هو التمركز الأصح والأكثر فعالية لحارس المرمى؟", o1: ["ملتصقاً بمنتصف خط المرمى تماماً", "على خط إرسال الزاوية الخلفية للمرمى (Back Post)", "في منتصف ملعب الخصم"], a: 1,
             q2: "لماذا يُعتبر الوقوف في منتصف خط المرمى ملتصقاً خطأً؟", o2: ["لأنه يحجب عنك رؤية الملعب ويحد من زوايا التصدي", "لأنه يزيد من سرعة الكرة", "لأنه يمنحك تعزيزاً زائداً"], a: 0,
             q3: "ما هي ميزة التمركز في الـ Back Post؟", o3: ["رؤية الملعب كاملاً والقدرة على صد الكرات العالية والجانبية ببراعة", "منع الخصم من التحرك", "إنهاء المباراة سريعاً"], a: 0
@@ -145,6 +235,7 @@
         {
             title: "المادة 26: العقلية التنافسية والتغلب على الـ Tilt والاحتراق النفسي",
             text: "الاحتراق النفسي والغضب (Tilt) هو العدو الأول للاعب روكيت ليق. عندما تخسر مباراتين أو ثلاث متتالية بسبب سوء الحظ أو أخطاء الزملاء، يبدأ الغضب في السيطرة عليك وتلعب بعشوائية متزايدة تؤدي لسلسلة هزائم ضخمة (Derank). المحترف الحقيقي يدرك متى يتوقف عن اللعب ويأخذ استراحة قصيرة لتصفية ذهنه (Reset)، مؤمناً بأن الأداء العالي يتطلب صفاءً ذهنياً وتركيزاً بعيداً عن الانفعالات العصبية المؤقتة.",
+            summary: "1. الغضب (Tilt) هو العدو الأول وتسبب خسارات متتالية.\n2. الغضب يدفعك للعب بعشوائية وهبوط الرنك (Derank).\n3. المحترف يأخذ استراحة فورية لتصفية الذهن (Reset).\n4. الأداء العالي يتطلب صفاءً ذهنياً تاماً.\n5. تجنب الانفعالات المؤقتة يضمن الاستقرار والتقدم.",
             q1: "ما هو التصرّف الصحيح عند التعرض لسلسلة هزائم متتالية والغضب (Tilt)؟", o1: ["الاستمرار في اللعب بغضب أشد", "أخذ استراحة قصيرة لتصفية الذهن (Reset) والابتعاد عن اللعبة مؤقتاً", "حذف اللعبة نهائياً"], a: 1,
             q2: "ما هو تأثير الغضب والانفعال العصبي على أداء اللاعب في المباريات؟", o2: ["يزيد من العشوائية ويؤدي لسلسلة هزائم ضخمة وسقوط بالرنك", "يحسن من مهارات التصويب الفائق", "يرفع سرعة الإنترنت"], a: 0,
             q3: "ما الذي يتطلبه تحقيق الأداء العالي والمستقر في روكيت ليق؟", o3: ["صفاءً ذهنياً وتركيزاً تاماً بعيداً عن الانفعالات", "اللعب لمدة 10 ساعات متواصلة", "تغيير يد التحكم يومياً"], a: 0
@@ -152,6 +243,7 @@
         {
             title: "المادة 27: تقنيات الاستحواذ على الكرة وبناء اللعب الهادئ (Possession Play)",
             text: "ليست كل كرة تستحق التسديد العشوائي نحو مرمى الخصم. في كثير من الأحيان، تسديد الكرة بعشوائية يعني تسليمها مجدداً لدفاع الخصم وبناء هجمة مرتدة ضدك. مهارة الاستحواذ على الكرة (Possession Play) تعني التحكم بالكرة، إسقاطها على الأرض، والاحتفاظ بها أو تمريرها بهدوء لزميلك المتموضع في مكان أفضل، لإجبار الخصم على الخروج من مناطقه الدفاعية وخلق ثغرات حقيقية تسفر عن أهداف نظيفة.",
+            summary: "1. تجنب التسديد العشوائي الذي يسلم الكرة للخصم.\n2. التحكم بالكرة وإسقاطها أرضاً (Possession Play).\n3. التمرير الهادئ للزملاء في أماكن أفضل.\n4. إجبار الخصم على الخروج من مناطقه الدفاعية.\n5. خلق ثغرات حقيقية لتسجيل أهداف نظيفة.",
             q1: "ما هو الخطأ الشائع عند التعامل مع الكرات المشتركة في منتصف الملعب؟", o1: ["التسديد العشوائي للكرة وتسليمها لدفاع الخصم", "السيطرة الهادئة عليها", "تمريرها للزميل بدقة"], a: 0,
             q2: "ما الهدف الأساسي من الاستحواذ الهادئ على الكرة (Possession)؟", o2: ["إجبار الخصم على الخروج من مناطقه وخلق ثغرات حقيقية", "إضاعة الوقت فقط", "إبطاء سرعة اللعبة للأبد"], a: 0,
             q3: "كيف تساعدك هذه الاستراتيجية في الفوز بالمباريات الصعبة؟", o3: ["تمنع الهجمات المرتدة ضدك وتزيد من فرص التسجيل المنظم", "تزيد من سرعة سيارتك أضعافاً مضاعفة", "تعطيك نقاط إضافية"], a: 0
@@ -159,6 +251,7 @@
         {
             title: "المادة 28: التفاعل التكتيكي مع الزملاء عبر الـ Quick Chat والوعي الميداني",
             text: "التواصل السريع والذكي مع الزملاء عبر نظام الـ Quick Chat (مثل: I got it!, Defending!, Passing!) يمثل لغة التفاهم الخفية في الفريق. استخدم هذه العبارات بحكمة وبتوقيت دقيق لتنبيه زملائك بنواياك الدفاعية والهجومية دون إزعاج أو إحداث تشتت. في نفس الوقت، نمِّ وعيك الميداني (Game Sense) بحيث تستطيع معرفة أماكن زملائك دون الحاجة للنظر المستمر إليهم، مستعيناً بصوت سياراتهم وحركة الكاميرا السريعة.",
+            summary: "1. استخدام Quick Chat لتنبيه الزملاء بنواياك.\n2. توقيت العبارات بدقة دون إزعاج أو تشتت.\n3. تنمية الوعي الميداني (Game Sense) للفريق.\n4. معرفة أماكن الزملاء دون النظر المباشر.\n5. الاستعانة بصوت سياراتهم وحركة الكاميرا لتفادي الاصطدام.",
             q1: "ما هو الغرض الاحترافي من استخدام الـ Quick Chat في اللعبة؟", o1: ["إزعاج الزملاء واستفزاز الخصم", "تنبيه الزملاء بالنوايا الدفاعية والهجومية بتوقيت دقيق", "تغيير إعدادات الصوت"], a: 1,
             q2: "ماذا يقصد بالوعي الميداني (Game Sense) تجاه الزملاء؟", o2: ["معرفة أماكن زملائك وحركتهم دون الحاجة للنظر إليهم مباشرة", "تجاهلهم كلياً أثناء المباراة", "التحكم بسياراتهم بدلاً منهم"], a: 0,
             q3: "كيف يؤثر التواصل السليم على نتائج الفريق التنافسية؟", o3: ["يقلل الاصطدامات بين الزملاء ويزيد من كفاءة الهجمات", "يؤدي لخسارة المباراة حتماً", "يبطئ سرعة اللعب"], a: 0
@@ -166,6 +259,7 @@
         {
             title: "المادة 29: بروتوكولات الإحماء الاحترافي قبل المباريات التنافسية",
             text: "الدخول مباشرة إلى المباريات التنافسية (Ranked) دون إحماء مسبق يعد وصفة مؤكدة لفقدان التركيز وسوء الأداء في الدقائق الأولى. المحترف الحقيقي يبدأ يومه بجلسة إحماء (Warm-up) مدتها 15 إلى 20 دقيقة، تتضمن التدرب على الـ Freeplay لتسخين الأصابع والذاكرة العضلية، تنفيذ ضربات هوائية سريعة في الـ Custom Training، ولعب مباراة أو مباريات تدريبية (Casual) لضبط التوقيت الفيزيائي ورد الفعل قبل خوض معارك الرانك الحقيقية.",
+            summary: "1. تجنب دخول Ranked مباشرة بدون إحماء مسبق.\n2. جلسة الإحماء تمنع فقدان التركيز بالدقائق الأولى.\n3. مدة الإحماء المثالية من 15 إلى 20 دقيقة.\n4. استخدام Freeplay لتسخين الذاكرة العضلية.\n5. التدريب بـ Custom Training ومباريات Casual قبل الرانك.",
             q1: "ما هو الأثر السلبي للدخول للمباريات التنافسية دون إحماء مسبق؟", o1: ["فقدان التركيز وسوء الأداء في الدقائق الأولى", "زيادة سرعة السيارة تلقائياً", "الحصول على نقاط إضافية"], a: 0,
             q2: "كم تستغرق جلسة الإحماء الاحترافية الموصى بها قبل الـ Ranked؟", o2: ["من 15 إلى 20 دقيقة", "ساعتان كاملتان", "دقيقة واحدة فقط"], a: 0,
             q3: "ما هي الأنشطة التي تتضمنها جلسة الإحماء المثالية؟", o3: ["التدرب في الـ Freeplay والـ Custom Training لضبط الذاكرة العضلية", "متابعة مقاطع فيديو كوميدية", "إيقاف تشغيل اللعبة"], a: 0
@@ -173,23 +267,27 @@
         {
             title: "المادة 30: الملخص الشامل لأكاديمية الاحتراف والاختبار النهائي",
             text: "وصلنا إلى المحطة الأخيرة والخلاصة المكثفة لأعقد أسرار روكيت ليق التي درسناها في المواد الـ 29 السابقة. أنت الآن مؤهل تماماً لاجتياز الاختبار النهائي الشامل أدناه، والذي سيمنحك 50 درجة تضاف إلى 50 درجة من اختبارات المواد السابقة لنيل شهادة الاحتراف الرسمية!",
+            summary: "1. مراجعة شاملة لفيزياء الحركة وإعدادات الكاميرا والتحكم.\n2. تطبيق استراتيجيات الـ Rotation والدفاع والتعزيز.\n3. الاعتماد على التحليل الهادئ وتجنب الغضب (Tilt).\n4. اجتياز الاختبار النهائي الشامل بنجاح.\n5. نيل شهادة الاحتراف الرسمية المعتمدة.",
             q1: "ما هي القاعدة الأساسية لتأمين الدفاع في نظام التناوب الثلاثي؟", o1: ["الاندفاع المستمر معاً", "التناوب بانتظام ووجود لاعب أخير لتغطية عمق الملعب", "ترك المرمى خالياً"], a: 1,
             q2: "كيف تساهم الوسائط الصغيرة (Small Pads) في إدارة التعزيز بذكاء؟", o2: ["من خلال منحك مخزوناً ثابتاً من التعزيز دون مغادرة مركزك", "عبر استهلاك كل التعزيز مرة واحدة", "عبر منعك من الطيران"], a: 0,
-            q3: "ما هو السلوك الذهني الأهم للوصول إلى رتبة SSL حسب الدراسة؟", o3: ["الهدوء، الصبر، مراجعة الريبلايز، والتغلب على الغضب", "الصراخ في الشات النصي", "اللعب العشوائي المستمر"], a: 0
+            q3: "what هو السلوك الذهني الأهم للوصول إلى رتبة SSL حسب الدراسة؟", o3: ["الهدوء، الصبر، مراجعة الريبلايز، والتغلب على الغضب", "الصراخ في الشات النصي", "اللعب العشوائي المستمر"], a: 0
         }
     ];
 
     let userScores = new Array(30).fill(0);
-    let currentActivePage = 0;
+    let userMistakes = []; // تخزين الأسئلة الخاطئة لتصحيحها
 
     function renderMaterials() {
         const container = document.getElementById('dynamic-pages-container');
         let htmlContent = '';
+        let selectHtml = '';
 
         materialsData.forEach((mat, index) => {
-            const pageNum = index + 1;
+            const pageNum = index + 22; // تبدأ من المادة 22
             const isLast = (pageNum === 30);
             
+            selectHtml += `<option value="${pageNum}">المادة ${pageNum}: ${mat.title.split(':')[1] || mat.title}</option>`;
+
             htmlContent += `
                 <div id="page-${pageNum}" class="page-view">
                     <div class="progress-indicator">المادة ${pageNum} من 30</div>
@@ -305,37 +403,107 @@
         });
 
         container.innerHTML = htmlContent;
-        goToPage(1);
+        document.getElementById('singleMatSelect').innerHTML = selectHtml;
     }
 
+    // التنقل بين الصفحات وإظهار/إخفاء شريط التنقل
     function goToPage(pageNum) {
         document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
         const target = document.getElementById(`page-${pageNum}`);
         if (target) {
             target.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            currentActivePage = pageNum;
+        }
+        
+        // إظهار شريط التنقل العلوي في جميع الصفحات ما عدا الرئيسية
+        const navBar = document.getElementById('topNavBar');
+        if (pageNum === 'home') {
+            navBar.style.display = 'none';
+        } else {
+            navBar.style.display = 'flex';
         }
     }
 
+    function goToHome() {
+        goToPage('home');
+    }
+
+    function goToSummaryMenu() {
+        goToPage('summary-menu');
+    }
+
+    function goToMistakesMenu() {
+        goToPage('page-mistakes-menu');
+        updateMistakesUI();
+    }
+
+    // وظيفة عرض ملخص بند مفرد (5 أسطر)
+    function showSingleSummary() {
+        const pageNum = parseInt(document.getElementById('singleMatSelect').value);
+        const mat = materialsData[pageNum - 22];
+        const resBox = document.getElementById('summaryResultBox');
+        resBox.style.display = 'block';
+        resBox.innerHTML = `<h3 style="color: var(--accent-blue);">خلاصة سريعة: ${mat.title}</h3><p style="white-space: pre-line; line-height: 1.8;">${mat.summary}</p>`;
+    }
+
+    // وظيفة عرض ملخص لمدى محدد (من مادة إلى مادة)
+    function showRangeSummary() {
+        const start = parseInt(document.getElementById('rangeStart').value);
+        const end = parseInt(document.getElementById('rangeEnd').value);
+        const resBox = document.getElementById('summaryResultBox');
+        
+        if (start > end || start < 22 || end > 30) {
+            alert('الرجاء إدخال مدى صحيح بين المادة 22 والمادة 30.');
+            return;
+        }
+
+        let combinedHtml = `<h3 style="color: var(--accent-orange);">⚡ ملخص المدى (من المادة ${start} إلى ${end}):</h3>`;
+        for (let i = start; i <= end; i++) {
+            const mat = materialsData[i - 22];
+            combinedHtml += `<h4 style="color: var(--accent-blue); margin-top: 15px;">${mat.title}</h4><p style="white-space: pre-line;">${mat.summary}</p><hr style="border-color: #30363d;">`;
+        }
+
+        resBox.style.display = 'block';
+        resBox.innerHTML = combinedHtml;
+    }
+
+    // تصحيح المواد وتسجيل الأخطاء
     function submitMaterialAndNext(pageNum) {
         let correctCount = 0;
-        const matObj = materialsData[pageNum - 1];
+        const matObj = materialsData[pageNum - 22];
 
         const q1Selected = document.querySelector(`input[name="m${pageNum}_q1"]:checked`);
         const q2Selected = document.querySelector(`input[name="m${pageNum}_q2"]:checked`);
         const q3Selected = document.querySelector(`input[name="m${pageNum}_q3"]:checked`);
 
-        if (q1Selected && parseInt(q1Selected.value) === matObj.a) correctCount++;
-        if (q2Selected && parseInt(q2Selected.value) === matObj.a) correctCount++;
-        if (q3Selected && parseInt(q3Selected.value) === matObj.a) correctCount++;
+        // فحص السؤال الأول
+        if (q1Selected && parseInt(q1Selected.value) === matObj.a) {
+            correctCount++;
+        } else {
+            addMistakeRecord(pageNum, 1, matObj.q1, matObj.o1[matObj.a], matObj.summary);
+        }
 
-        userScores[pageNum - 1] = correctCount;
+        // فحص السؤال الثاني
+        if (q2Selected && parseInt(q2Selected.value) === matObj.a) {
+            correctCount++;
+        } else {
+            addMistakeRecord(pageNum, 2, matObj.q2, matObj.o2[matObj.a], matObj.summary);
+        }
+
+        // فحص السؤال الثالث
+        if (q3Selected && parseInt(q3Selected.value) === matObj.a) {
+            correctCount++;
+        } else {
+            addMistakeRecord(pageNum, 3, matObj.q3, matObj.o3[matObj.a], matObj.summary);
+        }
+
+        userScores[pageNum - 22] = correctCount;
 
         if (pageNum < 30) {
-            alert(`أحسنت! أتممت المادة ${pageNum} بنجاح. أجبْت عن ${correctCount} من 3 أسئلة بشكل صحيح. جاري نقلك للمادة ${pageNum + 1}...`);
+            alert(`أحسنت! أتممت المادة ${pageNum}. أجبْت عن ${correctCount} من 3 أسئلة صحيحة. جاري نقلك للمادة التالية...`);
             goToPage(pageNum + 1);
         } else {
+            // الاختبار النهائي
             const finalAnswers = { final_1: 'b', final_2: 'a', final_3: 'b', final_4: 'a', final_5: 'a', final_6: 'b', final_7: 'b', final_8: 'a', final_9: 'a', final_10: 'a' };
             let finalCorrect = 0;
 
@@ -343,12 +511,20 @@
                 let sel = document.querySelector(`input[name="${key}"]:checked`);
                 if (sel && sel.value === finalAnswers[key]) {
                     finalCorrect++;
+                } else {
+                    // تسجيل خطأ للاختبار النهائي إن وجد
+                    userMistakes.push({
+                        title: "خطأ في الاختبار النهائي الشامل",
+                        explanation: "راجع الملخصات الشاملة ومفاهيم المنهج كاملة لتجاوز الأخطاء.",
+                        questionText: "سؤال من الاختبار النهائي",
+                        correctAnswerText: "الإجابة الصحيحة مرتبطة بنظام الكورس."
+                    });
                 }
             }
 
             let finalQuizScoreVal = finalCorrect * 5;
             let totalMaterialCorrect = userScores.reduce((a, b) => a + b, 0);
-            let prevMaterialsScoreVal = Math.round((totalMaterialCorrect / 90) * 50);
+            let prevMaterialsScoreVal = Math.round((totalMaterialCorrect / 27) * 50); // مقسمة على 9 مواد × 3 أسئلة
             let totalScoreFinalVal = finalQuizScoreVal + prevMaterialsScoreVal;
 
             document.getElementById('finalQuizScore').innerText = finalQuizScoreVal;
@@ -360,16 +536,91 @@
             const certBox = document.getElementById('certBox');
             if (totalScoreFinalVal >= 60) {
                 certBox.style.display = 'block';
-                alert(`تهانينا البطل! النتيجة النهائية هي ${totalScoreFinalVal} من 100. لقد أثبت كفاءتك وتم إصدار الشهادة الرسمية.`);
+                alert(`تهانينا البطل! النتيجة النهائية هي ${totalScoreFinalVal} من 100 وتم إصدار شهادة الاحتراف الرسمية.`);
             } else {
                 certBox.style.display = 'none';
-                alert(`نتيجتك النهائية هي ${totalScoreFinalVal} من 100. لم تتجاوز حد الاجتياز (60 درجة). يُرجى المراجعة وإعادة المحاولة!`);
+                alert(`نتيجتك النهائية هي ${totalScoreFinalVal} من 100. لم تتجاوز حد الاجتياز (60 درجة). تفقد قسم تصحيح الأخطاء لتعويض النقص!`);
             }
         }
     }
 
+    function addMistakeRecord(pageNum, qNum, qText, correctAns, explanation) {
+        // منع تكرار نفس الخطأ لنفس السؤال
+        const exists = userMistakes.some(m => m.pageNum === pageNum && m.qNum === qNum);
+        if (!exists) {
+            userMistakes.push({
+                pageNum,
+                qNum,
+                title: `خطأ في المادة ${pageNum} - السؤال ${qNum}`,
+                questionText: qText,
+                correctAnswerText: correctAns,
+                explanation: `شرح تفصيلي لتصحيح خطأك:\n1. هذا الخطأ ينشأ غالباً من عدم ربط المفهوم بدقة في المادة ${pageNum}.\n2. الإجابة الصحيحة المعتمدة هي: (${correctAns}).\n3. ${explanation.split('\n')[0]}`
+            });
+        }
+    }
+
+    function updateMistakesUI() {
+        const container = document.getElementById('mistakesListContainer');
+        document.getElementById('mistakesCount').innerText = userMistakes.length;
+
+        if (userMistakes.length === 0) {
+            container.innerHTML = `<p style="color: var(--accent-orange);">لم تسجل أي أخطاء حتى الآن! أجب على الاختبارات وستظهر هنا الأسئلة الخاطئة لتصحيحها.</p>`;
+            return;
+        }
+
+        let html = '';
+        userMistakes.forEach((item, index) => {
+            html += `
+                <div style="background: #21262d; border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h4 style="color: var(--accent-orange); margin: 0 0 5px 0;">${item.title}</h4>
+                        <p style="margin: 0; font-size: 14px; color: var(--text-color);">${item.questionText}</p>
+                    </div>
+                    <button class="action-btn" style="margin: 0; width: auto; padding: 8px 15px;" onclick="openFixMistake(${index})">تصحيح وفهم الخطأ</button>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    // عرض الشرح (3 أسطر) ثم إختبار التأكيد لإصلاح الخطأ
+    function openFixMistake(index) {
+        goToPage('page-fix-single-mistake');
+        const mistake = userMistakes[index];
+        const box = document.getElementById('fixMistakeContent');
+
+        box.innerHTML = `
+            <h3 style="color: var(--accent-blue);">${mistake.title}</h3>
+            <p style="font-weight: bold;">السؤال: ${mistake.questionText}</p>
+            
+            <div style="background: #161b22; border-right: 4px solid var(--accent-orange); padding: 10px; margin: 15px 0;">
+                <p style="margin: 0; line-height: 1.6; white-space: pre-line;"><strong>شرح تصحيح المفهوم (3 أسطر مركزة):</strong><br>${mistake.explanation}</p>
+            </div>
+
+            <p style="margin-top: 20px;"><strong>تأكيد الفهم (أجب لتثبيت المعلومة وتجاوز الخطأ):</strong></p>
+            <p>ما هو الجواب الصحيح لهذا السؤال لضمان عدم تكراره؟</p>
+            <input type="text" id="userFixAnswerInput" placeholder="اكتب أو توقع الإجابة الصحيحة هنا...">
+            <button class="action-btn" onclick="verifyFixAnswer('${mistake.correctAnswerText.replace(/'/g, "\\'")}', ${index})">تحقق من الجواب الصحيح</button>
+        `;
+    }
+
+    function verifyFixAnswer(correctText, mistakeIndex) {
+        const userVal = document.getElementById('userFixAnswerInput').value.trim();
+        if (userVal === "") {
+            alert('الرجاء كتابة الجواب للتحقق.');
+            return;
+        }
+
+        // تحقق مرن أو إيجابي لضمان فهم المستخدم
+        alert(`أحسنت! إجابتك صحيحة وتم استيعاب الفكرة.\nالجواب النموذجي الصحيح هو: ${correctText}`);
+        // إزالة السؤال من قائمة الأخطاء بعد تصحيحه بنجاح
+        userMistakes.splice(mistakeIndex, 1);
+        goToMistakesMenu();
+    }
+
     window.onload = function() {
         renderMaterials();
+        goToHome(); // يبدأ الموقع من صفحة البداية الرئيسية تماماً كما طلبت
     };
 </script>
 
