@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>طريقك للاحتراف - دراسة Rocket League التفاعلية</title>
+    <title>طريقك للاحتراف - دراسة Rocket League والاختبار الشهادة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,6 +12,7 @@
             --accent-blue: #00f0ff;
             --accent-orange: #ff5500;
             --accent-green: #10b981;
+            --accent-red: #ef4444;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
             --border-color: rgba(0, 240, 255, 0.2);
@@ -119,67 +120,140 @@
             color: var(--accent-blue);
         }
 
-        /* تنسيق الألعاب التفاعلية المصغرة */
-        .minigame-box {
-            background: #080b12;
-            border: 2px dashed var(--accent-blue);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 30px 0;
-            text-align: center;
-        }
-
-        .minigame-box h4 {
-            color: var(--accent-blue);
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        .minigame-box p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-        }
-
-        canvas {
-            background: #05070a;
-            border-radius: 8px;
-            display: block;
-            margin: 0 auto 15px auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .game-btn {
-            background: var(--accent-orange);
-            color: #fff;
-            border: none;
-            padding: 10px 25px;
-            font-size: 1rem;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .game-btn:hover {
-            background: #e04b00;
-            transform: scale(1.05);
-        }
-
-        .score-board {
-            font-size: 1.1rem;
-            color: var(--accent-green);
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
         .highlight-box {
             background: rgba(0, 240, 255, 0.05);
             border-right: 4px solid var(--accent-blue);
             padding: 20px;
             border-radius: 8px;
             margin: 25px 0;
+        }
+
+        /* تنسيق قسم الاختبار */
+        .quiz-section {
+            background: #080b12;
+            border: 2px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .quiz-section h3 {
+            color: var(--accent-blue);
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .question-card {
+            background: #131b2e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .question-card p {
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        .options label {
+            display: block;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .options label:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        .options input {
+            margin-left: 10px;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background: var(--accent-orange);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            font-size: 1.2rem;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: #e04b00;
+        }
+
+        /* تصميم الشهادة */
+        .certificate {
+            display: none;
+            background: linear-gradient(135deg, #0b0f19 0%, #1a233a 100%);
+            border: 4px solid var(--accent-orange);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 0 40px rgba(255, 85, 0, 0.3);
+            position: relative;
+        }
+
+        .certificate h2 {
+            color: var(--accent-orange);
+            font-size: 2.2rem;
+            border: none;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .certificate h3 {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .certificate p {
+            font-size: 1.1rem;
+            color: #e5e7eb;
+            margin-bottom: 15px;
+        }
+
+        .cert-signature {
+            margin-top: 40px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.2);
+            padding-top: 15px;
+            font-weight: bold;
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+        }
+
+        .print-btn {
+            background: var(--accent-blue);
+            color: #0b0f19;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .print-btn:hover {
+            background: #00bcd4;
         }
 
         footer {
@@ -198,11 +272,6 @@
             .content {
                 padding: 20px 15px;
             }
-            canvas {
-                width: 100%;
-                max-width: 400px;
-                height: auto;
-            }
         }
     </style>
 </head>
@@ -210,8 +279,8 @@
 
     <div class="container">
         <header>
-            <h1>طريقك للاختراف</h1>
-            <p>دراسة تحليلية وتفاعلية متقدمة للعبة Rocket League (منظور يد تحكم PlayStation 5)</p>
+            <h1>طريقك للاحتراف</h1>
+            <p>دراسة تحليلية متقدمة للعبة Rocket League (منظور يد تحكم PlayStation 5)</p>
         </header>
 
         <div class="content">
@@ -219,207 +288,199 @@
             <!-- قسم تقديم الكاتب -->
             <div class="author-intro">
                 <h3>تقديم بقلم: سالم الكعبي</h3>
-                <p>تُعد لعبة Rocket League بيئة تنافسية فريدة تعتمد كلياً على المهارة الفردية والعمل الجماعي بعيداً عن أي عناصر عشوائية. في هذه الدراسة التفاعلية، لم أكتفِ بشرح الاستراتيجيات، بل أضفت تحديات ميني جيم حقيقية تحاكي كل مهارة لتتأكد بنفسك من إتقانك لها!</p>
+                <p>تُعد لعبة Rocket League بيئة تنافسية فريدة تعتمد كلياً على المهارة الفردية والعمل الجماعي. في هذه الدراسة الشاملة، قمت بجمع أبرز الأساليب والاستراتيجيات والضبط الهندسي لإعدادات يد تحكم PlayStation 5 (DualSense). اقرأ الدراسة بعناية، ثم أجب عن الاختبار في الأسفل لتحصيل شهادة إتمام الدراسة الموقعة!</p>
             </div>
 
             <h2>1. مقدمة تحليلية ونظرة عامة</h2>
-            <p>تُعد لعبة <strong>Rocket League</strong> واحدة من أبرز الرياضات الإلكترونية وأكثرها اعتماداً على المهارة البحتة. ترتكز بنية اللعبة على محاكاة فيزيائية دقيقة لكرة القدم مقترنة بمركبات صاروخية عالية الأداء.</p>
+            <p>تُعد لعبة <strong>Rocket League</strong> واحدة من أبرز الرياضات الإلكترونية وأكثرها اعتماداً على المهارة البحتة. ترتكز بنية اللعبة على محاكاة فيزيائية دقيقة لكرة القدم مقترنة بمركبات صاروخية عالية الأداء، وخلوها التام من عناصر "الدفع للفوز" يجعل التميز فيها مرتبطاً حصرياً بالكفاءة الحركية وإدارة الموارد.</p>
 
             <h2>2. الهندسة العصبية للتحكم: إعدادات PlayStation 5 (DualSense)</h2>
-            <p>التخصيص الدقيق لإعدادات يد تحكم PS5 هو الركيزة الأساسية لكسر حاجز الأداء المعتاد وتنفيذ الحركات المركبة بسلاسة.</p>
-            
-            <h3>أ. خريطة الأزرار المثلى:</h3>
+            <p>التخصيص الدقيق لإعدادات يد تحكم PS5 هو الركيزة الأساسية لكسر حاجز الأداء المعتاد وتنفيذ الحركات المركبة بسلاسة:</p>
             <ul>
-                <li><strong>زر القفز (Jump) على L1:</strong> ليتفرغ الإبهام للكاميرا والعصا بينما يتولى السبابة الأيسر القفز.</li>
-                <li><strong>التعزيز الصاروخي (Boost) على R1:</strong> لسرعة استجابة فائقة.</li>
+                <li><strong>زر القفز (Jump):</strong> يُنصح بنقله إلى زر <strong>L1</strong> ليتفرغ الإبهام للكاميرا بينما يتولى السبابة الأيسر القفز الفوري.</li>
+                <li><strong>التعزيز الصاروخي (Boost):</strong> يُفضل تخصيصه لزر <strong>R1</strong> لسرعة استجابة فائقة.</li>
+                <li><strong>حساسية العصا (Deadzone):</strong> تُقلل القيمة بين 0.05 و 0.08 لضمان استجابة فورية لأدق حركة.</li>
             </ul>
 
-            <!-- ميني جيم 1: تحدي سرعة التفاعل وتفادي العقبات (يحاكي التحكم السريع) -->
-            <div class="minigame-box">
-                <h4>🎮 تدريب تفاعلي 1: اختبار الاستجابة الحركية لـ PS5</h4>
-                <p>اضغط على زر المسافة (Spacebar) أو اضغط الشاشة لتفادي العوائق وسحق التدريب مثل محترفي الرانك العالي!</p>
-                <canvas id="game1Canvas" width="400" height="150"></canvas>
-                <div id="game1Score" class="score-board">النقاط: 0 / 5 للاجتياز</div>
-                <button class="game-btn" onclick="startMiniGame1()">ابدأ التحدي</button>
-            </div>
-
             <h2>3. الميكانيكيات التشغيلية وإدارة التعزيز</h2>
-            <p>الاعتماد على مسارات "الوسائط الصغيرة" (Small Pads) للحفاظ على طاقة مستمرة دون مغادرة التمركز.</p>
+            <p>الاعتماد على مسارات "الوسائط الصغيرة" (Small Pads) الموزعة بالميدان يحافظ على مخزون طاقة مستمر دون مغادرة التمركز، بالإضافة إلى تطبيق نظام التناوب الثلاثي (Rotation) لحماية المرمى وتنظيم الهجمات بدقة.</p>
 
-            <!-- ميني جيم 2: جمع البوستر (يحاكي جمع الوسائط الصغيرة) -->
-            <div class="minigame-box">
-                <h4>🎮 تدريب تفاعلي 2: جمع التعزيز (Boost Gathering)</h4>
-                <p>استخدم أزرار الأسهم (يمين ويسار) لتحريك سيارتك وجمع 10 حاويات تعزيز قبل نفاد الوقت!</p>
-                <canvas id="game2Canvas" width="400" height="150"></canvas>
-                <div id="game2Score" class="score-board">التعزيز المجمع: 0 / 10</div>
-                <button class="game-btn" onclick="startMiniGame2()">ابدأ جمع البوستر</button>
-            </div>
-
-            <h2>4. استراتيجيات الهجوم والتسجيل (Power Shots)</h2>
-            <p>التسديد الموجه عبر ضرب الكرة بالنصف الأمامي للسيارة لتوليد سرعة هائلة تباغت حارس المرمى.</p>
-
-            <!-- ميني جيم 3: تسديد الكرة نحو المرمى -->
-            <div class="minigame-box">
-                <h4>🎮 تدريب تفاعلي 3: تحدي التسديد الموجه (Power Shot)</h4>
-                <p>اضغط "إطلاق" في اللحظة المناسبة لتسديد الكرة بدقة وإحراز الهدف في الزاوية المستهدفة!</p>
-                <canvas id="game3Canvas" width="400" height="150"></canvas>
-                <div id="game3Score" class="score-board">الأهداف المحرزة: 0 / 3</div>
-                <button class="game-btn" onclick="shootGoal()">سدد الكرة الآن!</button>
-            </div>
+            <h2>4. استراتيجيات الهجوم والتسجيل التنافسي</h2>
+            <p>تعتمد الأهداف الحاسمة على <strong>التسديد الموجه (Power Shots)</strong> عبر ضرب الكرة بالنصف الأمامي السفلي للسيارة فور ارتدادها، مع استخدام <strong>الدفاع الظلي (Shadow Defense)</strong> لتجنب الاندفاع المباشر وإجبار الخصم على ارتكاب الأخطاء.</p>
 
             <h2>5. النهج التطويري لأبطال العالم</h2>
-            <p>الوصول إلى رتبة Supersonic Legend وبطولات RLCS يتطلب تدريباً موجهاً ومراجعة مستمرة للأخطاء.</p>
+            <p>الوصول لرتبة Supersonic Legend وبطولات RLCS يتطلب تخصيص أوقات للتدريب الحر، والتحليل الدقيق للمباريات المسجلة (Replay Analysis) لتشخيص الأخطاء وتقييم استهلاك التعزيز.</p>
 
             <div class="highlight-box">
-                <strong>نصيحة ذهبية:</strong> إذا اجتزت هذه التحديات التفاعلية الثلاثة، فأنت تمتلك ردة الفعل الأساسية للمنافسة! خصص 20 دقيقة يومياً لتمارين التحكم بـ PS5.
+                <strong>ملاحظة هامة:</strong> اجتز الاختبار أدناه بـ 6 إجابات صحيحة على الأقل من أصل 10 أسئلة لتحصل على شهادة الاعتماد الرسمية الموقعة من الكاتب!
             </div>
+
+            <!-- قسم الاختبار التفاعلي -->
+            <div class="quiz-section">
+                <h3>اختبار إتقان طريقة اللعب الأفضل</h3>
+                <form id="quizForm">
+                    
+                    <!-- السؤال 1 -->
+                    <div class="question-card">
+                        <p>1. ما هو الزر الأنسب لنقل وظيفة "القفز (Jump)" عليه في يد تحكم PS5 لتسهيل اللعب الاحترافي؟</p>
+                        <div class="options">
+                            <label><input type="radio" name="q1" value="a"> أ) X الافتراضي</label>
+                            <label><input type="radio" name="q1" value="b"> ب) L1</label>
+                            <label><input type="radio" name="q1" value="c"> ج) سهم اليمين</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 2 -->
+                    <div class="question-card">
+                        <p>2. لماذا يُنصح بتغيير زر التعزيز (Boost) إلى R1؟</p>
+                        <div class="options">
+                            <label><input type="radio" name="q2" value="a"> أ) لسرعة استجابة فائقة وسهولة الضغط مع أزرار أخرى</label>
+                            <label><input type="radio" name="q2" value="b"> ب) لتقليل إضاءة اليد</label>
+                            <label><input type="radio" name="q2" value="c"> ج) لأنه يوفر طاقة البلايستيشن</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 3 -->
+                    <div class="question-card">
+                        <p>3. ما هي الفائدة الرئيسية من جمع مسارات "الوسائط الصغيرة (Small Pads)" بدلاً من الاعتماد فقط على التعزيز الكبير؟</p>
+                        <div class="options">
+                            <label><input type="radio" name="q3" value="a"> أ) الحصول على نقاط إضافية فقط</label>
+                            <label><input type="radio" name="q3" value="b"> ب) الحفاظ على مخزون طاقة مستمر دون مغادرة التمركز الهجومي أو الدفاعي</label>
+                            <label><input type="radio" name="q3" value="c"> ج) لإبطاء حركة الخصم</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 4 -->
+                    <div class="question-card">
+                        <p>4. ما هو النطاق المثالي لقيمة الـ (Deadzone) لعصا التحكم في PS5 لزيادة الدقة؟</p>
+                        <div class="options">
+                            <label><input type="radio" name="q4" value="a"> أ) بين 0.50 و 0.80</label>
+                            <label><input type="radio" name="q4" value="b"> ب) بين 0.05 و 0.08</label>
+                            <label><input type="radio" name="q4" value="c"> ج) القيمة القصوى 1.0</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 5 -->
+                    <div class="question-card">
+                        <p>5. ماذا يُقصد بمصطلح "التناوب الاستراتيجي (Rotation)"؟</p>
+                        <div class="options">
+                            <label><input type="radio" name="q5" value="a"> أ) تدوير الكاميرا يميناً ويساراً</label>
+                            <label><input type="radio" name="q5" value="b"> ب) نظام تنسيق جماعي لتبادل الأدوار بين الهجوم والتغطية والدفاع الأخير</label>
+                            <label><input type="radio" name="q5" value="c"> ج) طريقة دوران السيارة في الهواء</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 6 -->
+                    <div class="question-card">
+                        <p>6. كيف يتم تنفيذ "التسديد الموجه عالي القوة (Power Shot)" بالشكل الأمثل؟</p>
+                        <div class="options">
+                            <label><input type="radio" name="q6" value="a"> أ) ضرب الكرة من أعلى نقطة عشوائياً</label>
+                            <label><input type="radio" name="q6" value="b"> ب) ضرب الكرة باستخدام النصف الأمامي السفلي للسيارة مباشرة عقب ارتدادها</label>
+                            <label><input type="radio" name="q6" value="c"> ج) ترك الكرة تدخل المرمى لوحدها</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 7 -->
+                    <div class="question-card">
+                        <p>7. ما هو "الدفاع الظلي (Shadow Defense)"؟</p>
+                        <div class="options">
+                            <label><input type="radio" name="q7" value="a"> أ) الاختفاء من خريطة الملعب</label>
+                            <label><input type="radio" name="q7" value="b"> ب) التراجع أمام الخصم بنفس سرعته واتجاهه مع الحفاظ على مسافة أمان لفرض أخطاء</label>
+                            <label><input type="radio" name="q7" value="c"> ج) ترك المرمى فارغاً والهجوم السريع</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 8 -->
+                    <div class="question-card">
+                        <p>8. كيف طور أبطال العالم مهاراتهم للوصول إلى رتبة Supersonic Legend؟</p>
+                        <div class="options">
+                            <label><input type="radio" name="q8" value="a"> أ) عبر اللعب العشوائي دون تخطيط</label>
+                            <label><input type="radio" name="q8" value="b"> ب) عبر آلاف الساعات من التدريب الموجه وتحليل المباريات المسجلة (Replays)</label>
+                            <label><input type="radio" name="q8" value="c"> ج) عن طريق تغيير شكل السيارة فقط</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 9 -->
+                    <div class="question-card">
+                        <p>9. هل تحتوي لعبة Rocket League على عناصر تمنح أفضلية مالية (Pay-to-Win)؟</p>
+                        <div class="options">
+                            <label><input type="radio" name="q9" value="a"> أ) نعم، يمكن شراء سيارات أسرع بالمال</label>
+                            <label><input type="radio" name="q9" value="b"> ب) لا، اللعبة تعتمد كلياً على المهارة والفيزياء البحتة</label>
+                            <label><input type="radio" name="q9" value="c"> ج) نعم، لشراء تعزيز غير محدود</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 10 -->
+                    <div class="question-card">
+                        <p>10. ما هو التصنيف الحقيقي لطبيعة لعبة Rocket League الرياضية؟</p>
+                        <div class="options">
+                            <label><input type="radio" name="q10" value="a"> أ) رياضة إلكترونية (Esports) تنافسية تعتمد على الفيزياء</label>
+                            <label><input type="radio" name="q10" value="b"> ب) لعبة إطلاق نار استراتيجية</label>
+                            <label><input type="radio" name="q10" value="c"> ج) لعبة سباقات سرعة بحتة بدون كرة</label>
+                        </div>
+                    </div>
+
+                    <button type="button" class="submit-btn" onclick="checkQuiz()">إرسال وتصحيح الاختبار</button>
+                </form>
+
+                <!-- قسم الشهادة (تظهر تلقائياً عند النجاح) -->
+                <div id="certificateBox" class="certificate">
+                    <h2>🏆 شهادة إتمام الدراسة 🏆</h2>
+                    <h3>منصة محترفي Rocket League</h3>
+                    <p>تشهد هذه الدقة والاعتماد بأن اللاعب قد أتم بنجاح اختبار الاحتراف وتحليل اللعبة بنسبة استحقاق عالية.</p>
+                    <p><strong>ممنوحة إلى:</strong> <span id="userNameDisplay">بطل الرانك العالي</span></p>
+                    <p>النتيجة: <span id="scoreDisplay">0</span> / 10</p>
+                    <div class="cert-signature">
+                        معتمد وموقع رسمياً بواسطة: سالم الكعبي
+                    </div>
+                    <button class="print-btn" onclick="window.print()">طباعة أو حفظ الشهادة (PDF)</button>
+                </div>
+            </div>
+
         </div>
 
         <footer>
-            <p>تم إعداد هذه الدراسة والتحديات التفاعلية بواسطة: سالم الكعبي &copy; 2026</p>
+            <p>تم إعداد هذه الدراسة والاختبار بواسطة: سالم الكعبي &copy; 2026</p>
         </footer>
     </div>
 
-    <!-- سكربت الألعاب المصغرة -->
+    <!-- سكربت تصحيح الاختبار -->
     <script>
-        // --- ميني جيم 1: تفادي العقبات ---
-        let g1Interval, g1Score = 0, g1Active = false;
-        function startMiniGame1() {
-            const canvas = document.getElementById('game1Canvas');
-            const ctx = canvas.getContext('2d');
-            g1Score = 0;
-            g1Active = true;
-            let carY = 110, isJumping = false, jumpVel = 0;
-            let obstacleX = 400;
-
-            document.addEventListener('keydown', function handleKey(e) {
-                if (e.code === 'Space' && !isJumping && g1Active) {
-                    isJumping = true;
-                    jumpVel = -8;
-                }
-            });
-
-            canvas.onclick = function() {
-                if (!isJumping && g1Active) {
-                    isJumping = true;
-                    jumpVel = -8;
-                }
+        function checkQuiz() {
+            // الإجابات الصحيحة
+            const answers = {
+                q1: 'b',
+                q2: 'a',
+                q3: 'b',
+                q4: 'b',
+                q5: 'b',
+                q6: 'b',
+                q7: 'b',
+                q8: 'b',
+                q9: 'b',
+                q10: 'a'
             };
 
-            clearInterval(g1Interval);
-            g1Interval = setInterval(() => {
-                ctx.fillStyle = '#05070a';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            let score = 0;
+            let total = 10;
 
-                // أرضية الملعب
-                ctx.fillStyle = '#00f0ff';
-                ctx.fillRect(0, 130, canvas.width, 4);
-
-                // حركة القفز للسيارة
-                if (isJumping) {
-                    carY += jumpVel;
-                    jumpVel += 0.6;
-                    if (carY >= 110) {
-                        carY = 110;
-                        isJumping = false;
-                    }
+            for (let q in answers) {
+                let selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score++;
                 }
+            }
 
-                // رسم السيارة
-                ctx.fillStyle = '#ff5500';
-                ctx.fillRect(50, carY, 30, 20);
+            const certBox = document.getElementById('certificateBox');
+            document.getElementById('scoreDisplay').innerText = score;
 
-                // تحريك العقبة
-                obstacleX -= 5;
-                if (obstacleX < -20) {
-                    obstacleX = 400;
-                    g1Score++;
-                    document.getElementById('game1Score').innerText = `النقاط: ${g1Score} / 5 للاجتياز`;
-                    if (g1Score >= 5) {
-                        g1Active = false;
-                        clearInterval(g1Interval);
-                        alert('كفو يا وحش! أتقنت اختبار الاستجابة الحركية بنجاح.');
-                    }
-                }
-
-                // رسم العقبة
-                ctx.fillStyle = '#00f0ff';
-                ctx.fillRect(obstacleX, 115, 15, 15);
-
-                // فحص الاصطدام
-                if (obstacleX > 50 && obstacleX < 80 && carY > 95) {
-                    g1Active = false;
-                    clearInterval(g1Interval);
-                    alert('اصطدمت بالعقبة! حاول مرة أخرى.');
-                }
-            }, 30);
-        }
-
-        // --- ميني جيم 2: جمع البوستر ---
-        let g2Interval, g2Collected = 0, g2Active = false;
-        let carX = 180, padX = Math.random() * 350, padY = Math.random() * 100 + 20;
-
-        document.addEventListener('keydown', function(e) {
-            if (!g2Active) return;
-            if (e.key === 'ArrowRight' && carX < 370) carX += 20;
-            if (e.key === 'ArrowLeft' && carX > 10) carX -= 20;
-        });
-
-        function startMiniGame2() {
-            const canvas = document.getElementById('game2Canvas');
-            const ctx = canvas.getContext('2d');
-            g2Collected = 0;
-            g2Active = true;
-            carX = 180;
-
-            clearInterval(g2Interval);
-            g2Interval = setInterval(() => {
-                ctx.fillStyle = '#05070a';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // رسم مكان التعزيز (Pad)
-                ctx.fillStyle = '#ff5500';
-                ctx.beginPath();
-                ctx.arc(padX, padY, 10, 0, Math.PI * 2);
-                ctx.fill();
-
-                // رسم السيارة
-                ctx.fillStyle = '#00f0ff';
-                ctx.fillRect(carX, 110, 35, 15);
-
-                // فحص التقاط التعزيز
-                let dist = Math.hypot(carX + 17 - padX, 117 - padY);
-                if (dist < 20) {
-                    g2Collected++;
-                    padX = Math.random() * 350;
-                    padY = Math.random() * 90 + 10;
-                    document.getElementById('game2Score').innerText = `التعزيز المجمع: ${g2Collected} / 10`;
-                    if (g2Collected >= 10) {
-                        g2Active = false;
-                        clearInterval(g2Interval);
-                        alert('ممتاز جداً! أتقنت إدارة جمع الوسائط الصغيرة بنجاح.');
-                    }
-                }
-            }, 30);
-        }
-
-        // --- ميني جيم 3: التسديد الموجه ---
-        let g3Goals = 0;
-        function shootGoal() {
-            let targetZone = Math.random();
-            // تصنيف عشوائي للدقة
-            if (targetZone > 0.3) {
-                g3Goals++;
-                document.getElementById('game3Score').innerText = `الأهداف المحرزة: ${g3Goals} / 3`;
-                if (g3Goals >= 3) {
-                    alert('عالمي! سجلت 3 أهداف صاروخية متتالية بنجاح وأتقنت التسديد الموجه.');
-                    g3Goals = 0;
-                    document.getElementById('game3Score').innerText = `الأهداف المحرزة: 0 / 3`;
-                } else {
-                    alert('هدف نظيف في الزاوية الصعبة! باقي لك ' + (3 - g3Goals) + ' أهداف.');
-                }
+            if (score >= 6) {
+                certBox.style.display = 'block';
+                alert(`مبروك يا وحش! حصلت على ${score} من 10. لقد اجتزت الاختبار بنجاح وتم إصدار شهادتك الموقعة!`);
+                window.scrollTo({ top: certBox.offsetTop, behavior: 'smooth' });
             } else {
-                alert('تسديدة ضعيفة اصطدمت بالقائم! ركز وصوب بدقة أكبر.');
+                certBox.style.display = 'none';
+                alert(`عذراً، نتيجتك هي ${score} من 10. يلزمك الحصول على 6 إجابات صحيحة على الأقل للحصول على الشهادة. راجع الدراسة وحاول مرة أخرى!`);
             }
         }
     </script>
