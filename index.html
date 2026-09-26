@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>طريقك للاحتراف - دراسة Rocket League والاختبار الشهادة</title>
+    <title>طريقك للاحتراف - أكاديمية Rocket League المتقدمة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,7 +12,6 @@
             --accent-blue: #00f0ff;
             --accent-orange: #ff5500;
             --accent-green: #10b981;
-            --accent-red: #ef4444;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
             --border-color: rgba(0, 240, 255, 0.2);
@@ -128,13 +127,49 @@
             margin: 25px 0;
         }
 
-        /* تنسيق قسم الاختبار */
+        /* زر فتح الاختبار القسري */
+        .unlock-quiz-container {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: #080b12;
+            border-radius: 12px;
+            border: 1px dashed var(--accent-orange);
+        }
+
+        .unlock-btn {
+            background: var(--accent-orange);
+            color: #fff;
+            border: none;
+            padding: 16px 35px;
+            font-size: 1.2rem;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
+        }
+
+        .unlock-btn:hover {
+            background: #e04b00;
+            transform: scale(1.02);
+        }
+
+        /* تنسيق قسم الاختبار المتقدم (مخفي افتراضياً) */
         .quiz-section {
+            display: none;
             background: #080b12;
             border: 2px solid var(--accent-blue);
             border-radius: 12px;
             padding: 30px;
             margin-top: 40px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .quiz-section h3 {
@@ -146,22 +181,23 @@
 
         .question-card {
             background: #131b2e;
-            padding: 20px;
+            padding: 22px;
             border-radius: 8px;
             margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .question-card p {
-            font-weight: bold;
+            font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            font-size: 1.05rem;
         }
 
         .options label {
             display: block;
             background: rgba(255, 255, 255, 0.03);
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 6px;
             margin-bottom: 8px;
             cursor: pointer;
@@ -191,52 +227,70 @@
             border-radius: 8px;
             cursor: pointer;
             transition: 0.2s;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .submit-btn:hover {
             background: #e04b00;
         }
 
-        /* تصميم الشهادة */
+        /* تصميم الشهادة الاحترافية الفاخرة */
         .certificate {
             display: none;
-            background: linear-gradient(135deg, #0b0f19 0%, #1a233a 100%);
-            border: 4px solid var(--accent-orange);
+            background: radial-gradient(circle, #131b2e 0%, #080b12 100%);
+            border: 4px double var(--accent-orange);
             border-radius: 16px;
-            padding: 40px;
+            padding: 50px 30px;
             text-align: center;
             margin-top: 30px;
-            box-shadow: 0 0 40px rgba(255, 85, 0, 0.3);
-            position: relative;
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.2);
         }
 
         .certificate h2 {
             color: var(--accent-orange);
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             border: none;
             justify-content: center;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            font-weight: 900;
         }
 
-        .certificate h3 {
-            color: var(--accent-blue);
-            font-size: 1.5rem;
-            margin-bottom: 20px;
+        .certificate h4 {
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
         }
 
         .certificate p {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: #e5e7eb;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+        }
+
+        .cert-name {
+            font-size: 2rem;
+            color: var(--accent-blue);
+            font-weight: 900;
+            margin: 15px 0;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .cert-details {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 400px;
+            border: 1px solid var(--border-color);
         }
 
         .cert-signature {
-            margin-top: 40px;
-            border-top: 1px dashed rgba(255, 255, 255, 0.2);
+            margin-top: 35px;
+            border-top: 2px dashed rgba(255, 255, 255, 0.2);
             padding-top: 15px;
             font-weight: bold;
-            color: var(--accent-blue);
+            color: var(--accent-orange);
             font-size: 1.2rem;
         }
 
@@ -244,16 +298,19 @@
             background: var(--accent-blue);
             color: #0b0f19;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 30px;
             font-weight: bold;
-            border-radius: 6px;
+            font-size: 1.1rem;
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 25px;
             font-family: 'Cairo', sans-serif;
+            transition: 0.2s;
         }
 
         .print-btn:hover {
             background: #00bcd4;
+            transform: scale(1.05);
         }
 
         footer {
@@ -263,15 +320,6 @@
             color: var(--text-muted);
             font-size: 0.9rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-            .content {
-                padding: 20px 15px;
-            }
         }
     </style>
 </head>
@@ -288,150 +336,162 @@
             <!-- قسم تقديم الكاتب -->
             <div class="author-intro">
                 <h3>تقديم بقلم: سالم الكعبي</h3>
-                <p>تُعد لعبة Rocket League بيئة تنافسية فريدة تعتمد كلياً على المهارة الفردية والعمل الجماعي. في هذه الدراسة الشاملة، قمت بجمع أبرز الأساليب والاستراتيجيات والضبط الهندسي لإعدادات يد تحكم PlayStation 5 (DualSense). اقرأ الدراسة بعناية، ثم أجب عن الاختبار في الأسفل لتحصيل شهادة إتمام الدراسة الموقعة!</p>
+                <p>تُعد لعبة Rocket League بيئة تنافسية قاسية تعتمد على التفاصيل الفيزيائية الدقيقة. في هذه الدراسة، قمت بتأسيس المنهجيات الحقيقية للعب الجماعي، الهندسة العصبية ليد تحكم DualSense، وطرق فك شفرات الخصوم في الرانكات العالية. يرجى قراءة المحتوى بالكامل بعناية قبل فتح الاختبار.</p>
             </div>
 
             <h2>1. مقدمة تحليلية ونظرة عامة</h2>
-            <p>تُعد لعبة <strong>Rocket League</strong> واحدة من أبرز الرياضات الإلكترونية وأكثرها اعتماداً على المهارة البحتة. ترتكز بنية اللعبة على محاكاة فيزيائية دقيقة لكرة القدم مقترنة بمركبات صاروخية عالية الأداء، وخلوها التام من عناصر "الدفع للفوز" يجعل التميز فيها مرتبطاً حصرياً بالكفاءة الحركية وإدارة الموارد.</p>
+            <p>تُعد لعبة <strong>Rocket League</strong> واحدة من أعقد الرياضات الإلكترونية هندسياً. اعتمادها المطلق على محاكاة الفيزياء العكسية والزوايا الحركية يعني أن الفارق بين اللاعب العادي والمحترف يكمن في دقة اتخاذ القرار وإدارة الموارد اللحظية تحت الضغط.</p>
 
             <h2>2. الهندسة العصبية للتحكم: إعدادات PlayStation 5 (DualSense)</h2>
-            <p>التخصيص الدقيق لإعدادات يد تحكم PS5 هو الركيزة الأساسية لكسر حاجز الأداء المعتاد وتنفيذ الحركات المركبة بسلاسة:</p>
+            <p>الاعتماد على التوزيع الافتراضي يعيق التطور. لكسر حاجز الأداء، يجب تطبيق التعديلات التالية:</p>
             <ul>
-                <li><strong>زر القفز (Jump):</strong> يُنصح بنقله إلى زر <strong>L1</strong> ليتفرغ الإبهام للكاميرا بينما يتولى السبابة الأيسر القفز الفوري.</li>
-                <li><strong>التعزيز الصاروخي (Boost):</strong> يُفضل تخصيصه لزر <strong>R1</strong> لسرعة استجابة فائقة.</li>
-                <li><strong>حساسية العصا (Deadzone):</strong> تُقلل القيمة بين 0.05 و 0.08 لضمان استجابة فورية لأدق حركة.</li>
+                <li><strong>تعديل زر القفز (Jump):</strong> نقله إلى <strong>L1</strong> لتمكين الإبهام الأيمن من التفرغ الكامل لإدارة الكاميرا والعصا أثناء الطيران.</li>
+                <li><strong>التعزيز الصاروخي (Boost):</strong> تخصيصه لزر <strong>R1</strong> لضمان استجابة فورية دون تأخير تشريحي في الأصابع.</li>
+                <li><strong>حساسية العصا (Deadzone):</strong> تقليل القيمة بين 0.05 و 0.08 لإلغاء أي تأخير طفيف في استجابة عصا تحكم PS5.</li>
             </ul>
 
             <h2>3. الميكانيكيات التشغيلية وإدارة التعزيز</h2>
-            <p>الاعتماد على مسارات "الوسائط الصغيرة" (Small Pads) الموزعة بالميدان يحافظ على مخزون طاقة مستمر دون مغادرة التمركز، بالإضافة إلى تطبيق نظام التناوب الثلاثي (Rotation) لحماية المرمى وتنظيم الهجمات بدقة.</p>
+            <p>اللاعب المتقدم لا يتجه أبداً لزوايا الملعب للحصول على التعزيز الكبير أثناء الهجمات المرتدة؛ بل يعتمد كلياً على مسارات <strong>الوسائط الصغيرة (Small Pads)</strong> مع الالتزام التام بنظام <strong>التناوب الثلاثي (Rotation)</strong> لمنع ترك خط الدفاع مكشوفاً.</p>
 
             <h2>4. استراتيجيات الهجوم والتسجيل التنافسي</h2>
-            <p>تعتمد الأهداف الحاسمة على <strong>التسديد الموجه (Power Shots)</strong> عبر ضرب الكرة بالنصف الأمامي السفلي للسيارة فور ارتدادها، مع استخدام <strong>الدفاع الظلي (Shadow Defense)</strong> لتجنب الاندفاع المباشر وإجبار الخصم على ارتكاب الأخطاء.</p>
+            <p>لتخطي الحراس في الرانكات المتقدمة، يتم استخدام <strong>التسديد الموجه (Power Shots)</strong> عبر ضرب النصف السفلي للكرة عقب ارتدادها مباشرة لتوليد طاقة حركية عالية، مع تطبيق <strong>الدفاع الظلي (Shadow Defense)</strong> لامتصاص اندفاع الخصم وإجباره على ارتكاب الخطأ.</p>
 
             <h2>5. النهج التطويري لأبطال العالم</h2>
-            <p>الوصول لرتبة Supersonic Legend وبطولات RLCS يتطلب تخصيص أوقات للتدريب الحر، والتحليل الدقيق للمباريات المسجلة (Replay Analysis) لتشخيص الأخطاء وتقييم استهلاك التعزيز.</p>
+            <p>الوصول لرتبة Supersonic Legend يتطلب تخصيص جلسات يومية للتدريب الموجه، والقيام بعملية <strong>مراجعة المباريات المسجلة (Replay Analysis)</strong> لتشخيص الأخطاء الموضعية المرتکبة بدلاً من لوم الزملاء.</p>
 
             <div class="highlight-box">
-                <strong>ملاحظة هامة:</strong> اجتز الاختبار أدناه بـ 6 إجابات صحيحة على الأقل من أصل 10 أسئلة لتحصل على شهادة الاعتماد الرسمية الموقعة من الكاتب!
+                <strong>تنبيه إلزامي:</strong> الاختبار التالي لا يفتح إلا بعد تأكيد قراءة واستيعاب المادة العلمية أعلاه. يتطلب الاختبار إجابة 6 أسئلة صحيحة من أصل 10 للحصول على شهادة الاعتماد الموقعة.
             </div>
 
-            <!-- قسم الاختبار التفاعلي -->
-            <div class="quiz-section">
-                <h3>اختبار إتقان طريقة اللعب الأفضل</h3>
+            <!-- زر فتح الاختبار القسري -->
+            <div id="unlockContainer" class="unlock-quiz-container">
+                <p style="margin-bottom: 15px; color: var(--text-main); font-weight: bold;">هل أتممت قراءة الدراسة العلمية بتركيز؟</p>
+                <button class="unlock-btn" onclick="unlockQuiz()">📖 لقد قرأت الدراسة بالكامل - افتح الاختبار الآن</button>
+            </div>
+
+            <!-- قسم الاختبار المتقدم الواقعي (مخفي حتى الضغط على الزر) -->
+            <div id="quizSection" class="quiz-section">
+                <h3>اختبار محترفي Rocket League المتقدم</h3>
                 <form id="quizForm">
                     
                     <!-- السؤال 1 -->
                     <div class="question-card">
-                        <p>1. ما هو الزر الأنسب لنقل وظيفة "القفز (Jump)" عليه في يد تحكم PS5 لتسهيل اللعب الاحترافي؟</p>
+                        <p>1. لماذا يُعد نقل زر القفز إلى L1 في يد تحكم DualSense أمراً محورياً للمحترفين؟</p>
                         <div class="options">
-                            <label><input type="radio" name="q1" value="a"> أ) X الافتراضي</label>
-                            <label><input type="radio" name="q1" value="b"> ب) L1</label>
-                            <label><input type="radio" name="q1" value="c"> ج) سهم اليمين</label>
+                            <label><input type="radio" name="q1" value="a"> أ) لأنه يقلل استهلاك بطارية اليد</label>
+                            <label><input type="radio" name="q1" value="b"> ب) لكي يتفرغ الإبهام الأيمن كاملاً للتحكم بالكاميرا والعصا أثناء الطيران والقفز المتزامن</label>
+                            <label><input type="radio" name="q1" value="c"> ج) لأنه يزيد من سرعة دوران السيارة تلقائياً</label>
                         </div>
                     </div>
 
                     <!-- السؤال 2 -->
                     <div class="question-card">
-                        <p>2. لماذا يُنصح بتغيير زر التعزيز (Boost) إلى R1؟</p>
+                        <p>2. أثناء الهجوم المرتد السريع للخصم، لماذا يُفضل استخدام "الدفاع الظلي (Shadow Defense)" بدلاً من الاندفاع المباشر؟</p>
                         <div class="options">
-                            <label><input type="radio" name="q2" value="a"> أ) لسرعة استجابة فائقة وسهولة الضغط مع أزرار أخرى</label>
-                            <label><input type="radio" name="q2" value="b"> ب) لتقليل إضاءة اليد</label>
-                            <label><input type="radio" name="q2" value="c"> ج) لأنه يوفر طاقة البلايستيشن</label>
+                            <label><input type="radio" name="q2" value="a"> أ) لإجبار الخصم على اتخاذ قرار متسرع وتسهيل قراءة زاويته أو إبطاء هجمته</label>
+                            <label><input type="radio" name="q2" value="b"> ب) لكي تمنح الخصم فرصة لتسجيل الهدف براحة</label>
+                            <label><input type="radio" name="q2" value="c"> ج) لأن الاندفاع المباشر يستهلك كل التعزيز الكبير</label>
                         </div>
                     </div>
 
                     <!-- السؤال 3 -->
                     <div class="question-card">
-                        <p>3. ما هي الفائدة الرئيسية من جمع مسارات "الوسائط الصغيرة (Small Pads)" بدلاً من الاعتماد فقط على التعزيز الكبير؟</p>
+                        <p>3. ما هو التصرف الأسوأ الذي يرتكبه اللاعب في إدارة التعزيز خلال مباراة تنافسية؟</p>
                         <div class="options">
-                            <label><input type="radio" name="q3" value="a"> أ) الحصول على نقاط إضافية فقط</label>
-                            <label><input type="radio" name="q3" value="b"> ب) الحفاظ على مخزون طاقة مستمر دون مغادرة التمركز الهجومي أو الدفاعي</label>
-                            <label><input type="radio" name="q3" value="c"> ج) لإبطاء حركة الخصم</label>
+                            <label><input type="radio" name="q3" value="a"> أ) المرور فوق الوسائط الصغيرة (Small Pads)</label>
+                            <label><input type="radio" name="q3" value="b"> ب) ترك التمركز الدفاعي والتوجه المستمر لزوايا الملعب لالتقاط التعزيز الكبير</label>
+                            <label><input type="radio" name="q3" value="c"> ج) الحفاظ على مخزون 50% من التعزيز دائماً</label>
                         </div>
                     </div>
 
                     <!-- السؤال 4 -->
                     <div class="question-card">
-                        <p>4. ما هو النطاق المثالي لقيمة الـ (Deadzone) لعصا التحكم في PS5 لزيادة الدقة؟</p>
+                        <p>4. ما هو الفارق الفيزيائي الدقيق لتوليد "تسديدة قوية (Power Shot)" ناجحة نحو المرمى؟</p>
                         <div class="options">
-                            <label><input type="radio" name="q4" value="a"> أ) بين 0.50 و 0.80</label>
-                            <label><input type="radio" name="q4" value="b"> ب) بين 0.05 و 0.08</label>
-                            <label><input type="radio" name="q4" value="c"> ج) القيمة القصوى 1.0</label>
+                            <label><input type="radio" name="q4" value="a"> أ) ضرب الكرة بمؤخرة السيارة وهي في أعلى نقطة بالهواء</label>
+                            <label><input type="radio" name="q4" value="b"> ب) ضرب الكرة باستخدام النصف الأمامي السفلي للسيارة مباشرة عقب ارتدادها عن الأرض</label>
+                            <label><input type="radio" name="q4" value="c"> ج) دفع الكرة ببطء حتى تلتصق بالسيارة</label>
                         </div>
                     </div>
 
                     <!-- السؤال 5 -->
                     <div class="question-card">
-                        <p>5. ماذا يُقصد بمصطلح "التناوب الاستراتيجي (Rotation)"؟</p>
+                        <p>5. عندما تجد أن فريقك يفتقر للتمركز الصحيح ودائماً ما يُباغت بهجمات مرتدة، ما هو الحل التكتيكي الأساسي؟</p>
                         <div class="options">
-                            <label><input type="radio" name="q5" value="a"> أ) تدوير الكاميرا يميناً ويساراً</label>
-                            <label><input type="radio" name="q5" value="b"> ب) نظام تنسيق جماعي لتبادل الأدوار بين الهجوم والتغطية والدفاع الأخير</label>
-                            <label><input type="radio" name="q5" value="c"> ج) طريقة دوران السيارة في الهواء</label>
+                            <label><input type="radio" name="q5" value="a"> أ) لوم الزملاء في الشات النصي</label>
+                            <label><input type="radio" name="q5" value="b"> ب) الالتزام بدور اللاعب الأخير (Last Man) وتأمين عمق الملعب وتجنب الاندفاع</label>
+                            <label><input type="radio" name="q5" value="c"> ج) مغادرة المباراة فوراً</label>
                         </div>
                     </div>
 
                     <!-- السؤال 6 -->
                     <div class="question-card">
-                        <p>6. كيف يتم تنفيذ "التسديد الموجه عالي القوة (Power Shot)" بالشكل الأمثل؟</p>
+                        <p>6. ما هي الفائدة الفنية لتقليل قيمة عصا التوجيه (Stick Deadzone) على منصة PS5؟</p>
                         <div class="options">
-                            <label><input type="radio" name="q6" value="a"> أ) ضرب الكرة من أعلى نقطة عشوائياً</label>
-                            <label><input type="radio" name="q6" value="b"> ب) ضرب الكرة باستخدام النصف الأمامي السفلي للسيارة مباشرة عقب ارتدادها</label>
-                            <label><input type="radio" name="q6" value="c"> ج) ترك الكرة تدخل المرمى لوحدها</label>
+                            <label><input type="radio" name="q6" value="a"> أ) جعل السيارة أثقل وزناً في الهواء</label>
+                            <label><input type="radio" name="q6" value="b"> ب) القضاء على أي منطقة ميتة وضمان استجابة السيارة الفورية لأدق انحراف في العصا</label>
+                            <label><input type="radio" name="q6" value="c"> ج) زيادة ثبات الإنترنت (Ping)</label>
                         </div>
                     </div>
 
                     <!-- السؤال 7 -->
                     <div class="question-card">
-                        <p>7. ما هو "الدفاع الظلي (Shadow Defense)"؟</p>
+                        <p>7. كيف يساهم تحليل المباريات المسجلة (Replay Analysis) في تطوير المستوى الفردي؟</p>
                         <div class="options">
-                            <label><input type="radio" name="q7" value="a"> أ) الاختفاء من خريطة الملعب</label>
-                            <label><input type="radio" name="q7" value="b"> ب) التراجع أمام الخصم بنفس سرعته واتجاهه مع الحفاظ على مسافة أمان لفرض أخطاء</label>
-                            <label><input type="radio" name="q7" value="c"> ج) ترك المرمى فارغاً والهجوم السريع</label>
+                            <label><input type="radio" name="q7" value="a"> أ) عبر مشاهدة الأهداف الجميلة فقط للاستمتاع بها</label>
+                            <label><input type="radio" name="q7" value="b"> ب) عبر رصد الأخطاء التمركزية، توقيت قطع الكرات، وأسباب هدر التعزيز بدقة</label>
+                            <label><input type="radio" name="q7" value="c"> ج) لا توجد فائدة حقيقية منه مقارنة باللعب المستمر</label>
                         </div>
                     </div>
 
                     <!-- السؤال 8 -->
                     <div class="question-card">
-                        <p>8. كيف طور أبطال العالم مهاراتهم للوصول إلى رتبة Supersonic Legend؟</p>
+                        <p>8. في نظام التناوب الجماعي الثلاثي (Rotation)، ما هو الدور الأساسي للاعب المتقدم الأول (First Man)؟</p>
                         <div class="options">
-                            <label><input type="radio" name="q8" value="a"> أ) عبر اللعب العشوائي دون تخطيط</label>
-                            <label><input type="radio" name="q8" value="b"> ب) عبر آلاف الساعات من التدريب الموجه وتحليل المباريات المسجلة (Replays)</label>
-                            <label><input type="radio" name="q8" value="c"> ج) عن طريق تغيير شكل السيارة فقط</label>
+                            <label><input type="radio" name="q8" value="a"> أ) الوقوف داخل المرمى طوال الوقت</label>
+                            <label><input type="radio" name="q8" value="b"> ب) الضغط على حامل الكرة من الخصم لإجباره على التخلي عنها أو تمريرها بشكل سيء</label>
+                            <label><input type="radio" name="q8" value="c"> ج) محاولة جمع كل بوستر الملعب</label>
                         </div>
                     </div>
 
                     <!-- السؤال 9 -->
                     <div class="question-card">
-                        <p>9. هل تحتوي لعبة Rocket League على عناصر تمنح أفضلية مالية (Pay-to-Win)؟</p>
+                        <p>9. لماذا تُعتبر لعبة Rocket League رياضة إلكترونية عادلة مقارنة بالألعاب الأخرى؟</p>
                         <div class="options">
-                            <label><input type="radio" name="q9" value="a"> أ) نعم، يمكن شراء سيارات أسرع بالمال</label>
-                            <label><input type="radio" name="q9" value="b"> ب) لا، اللعبة تعتمد كلياً على المهارة والفيزياء البحتة</label>
-                            <label><input type="radio" name="q9" value="c"> ج) نعم، لشراء تعزيز غير محدود</label>
+                            <label><input type="radio" name="q9" value="a"> أ) لأنها توفر سيارات سريعة للمشترين بالمال</label>
+                            <label><input type="radio" name="q9" value="b"> ب) لخلوها التام من عناصر الأفضلية المالية، فالمهارة والفيزياء وحدها تفصل بين اللاعبين</label>
+                            <label><input type="radio" name="q9" value="c"> ج) لأن المباريات تنتهي بالتعادل دائماً</label>
                         </div>
                     </div>
 
                     <!-- السؤال 10 -->
                     <div class="question-card">
-                        <p>10. ما هو التصنيف الحقيقي لطبيعة لعبة Rocket League الرياضية؟</p>
+                        <p>10. ما هو المفتاح النفسي والعملي الحقيقي للوصول إلى الرتب المتقدمة (Grand Champion / SSL)؟</p>
                         <div class="options">
-                            <label><input type="radio" name="q10" value="a"> أ) رياضة إلكترونية (Esports) تنافسية تعتمد على الفيزياء</label>
-                            <label><input type="radio" name="q10" value="b"> ب) لعبة إطلاق نار استراتيجية</label>
-                            <label><input type="radio" name="q10" value="c"> ج) لعبة سباقات سرعة بحتة بدون كرة</label>
+                            <label><input type="radio" name="q10" value="a"> أ) اللعب العشوائي لمسافات طويلة يومياً دون توقف</label>
+                            <label><input type="radio" name="q10" value="b"> ب) الصبر، التدريب الموجه المستمر، وتقبل الأخطاء الفردية لتصحيحها تدريجياً</label>
+                            <label><input type="radio" name="q10" value="c"> ج) تغيير نوع يد التحكم كل أسبوع</label>
                         </div>
                     </div>
 
-                    <button type="button" class="submit-btn" onclick="checkQuiz()">إرسال وتصحيح الاختبار</button>
+                    <button type="button" class="submit-btn" onclick="checkQuiz()">إرسال وتقييم الاختبار المتقدم</button>
                 </form>
 
-                <!-- قسم الشهادة (تظهر تلقائياً عند النجاح) -->
+                <!-- قسم الشهادة الفاخرة المحدثة -->
                 <div id="certificateBox" class="certificate">
-                    <h2>🏆 شهادة إتمام الدراسة 🏆</h2>
-                    <h3>منصة محترفي Rocket League</h3>
-                    <p>تشهد هذه الدقة والاعتماد بأن اللاعب قد أتم بنجاح اختبار الاحتراف وتحليل اللعبة بنسبة استحقاق عالية.</p>
-                    <p><strong>ممنوحة إلى:</strong> <span id="userNameDisplay">بطل الرانك العالي</span></p>
-                    <p>النتيجة: <span id="scoreDisplay">0</span> / 10</p>
+                    <h2>🏆 شهادة اعتماد احتراف Rocket League 🏆</h2>
+                    <h4>Official Professional Certification</h4>
+                    <p>تشهد هذه الوثيقة بأن اللاعب المميز:</p>
+                    <div class="cert-name">بطل الرانك العالي</div>
+                    <p>قد قرأ الدراسة بعناية واجتاز بنجاح تام الاختبار التقني والميداني المتقدم، وأثبت كفاءة عالية في التمركز، ميكانيكيات اللعب، وإدارة الموارد.</p>
+                    
+                    <div class="cert-details">
+                        <p>النتيجة النهائية: <strong id="scoreDisplay" style="color: var(--accent-green);">0</strong> / 10</p>
+                        <p>حالة الاعتماد: <span style="color: var(--accent-blue);">مؤهل للوصول إلى رتبة SSL</span></p>
+                    </div>
+
                     <div class="cert-signature">
-                        معتمد وموقع رسمياً بواسطة: سالم الكعبي
+                        معتمد وموقع رسمياً بواسطة الخبير: سالم الكعبي
                     </div>
                     <button class="print-btn" onclick="window.print()">طباعة أو حفظ الشهادة (PDF)</button>
                 </div>
@@ -444,10 +504,20 @@
         </footer>
     </div>
 
-    <!-- سكربت تصحيح الاختبار -->
+    <!-- سكربت قفل وفتح الاختبار والتصحيح -->
     <script>
+        function unlockQuiz() {
+            const unlockContainer = document.getElementById('unlockContainer');
+            const quizSection = document.getElementById('quizSection');
+            
+            unlockContainer.style.display = 'none';
+            quizSection.style.display = 'block';
+            
+            window.scrollTo({ top: quizSection.offsetTop - 50, behavior: 'smooth' });
+        }
+
         function checkQuiz() {
-            // الإجابات الصحيحة
+            // المفتاح الصحيح للإجابات المتقدمة
             const answers = {
                 q1: 'b',
                 q2: 'a',
@@ -458,11 +528,10 @@
                 q7: 'b',
                 q8: 'b',
                 q9: 'b',
-                q10: 'a'
+                q10: 'b'
             };
 
-            let score = 0;
-            let total = 10;
+.           let score = 0;
 
             for (let q in answers) {
                 let selected = document.querySelector(`input[name="${q}"]:checked`);
@@ -476,11 +545,11 @@
 
             if (score >= 6) {
                 certBox.style.display = 'block';
-                alert(`مبروك يا وحش! حصلت على ${score} من 10. لقد اجتزت الاختبار بنجاح وتم إصدار شهادتك الموقعة!`);
+                alert(`أداء رائع ومحترف! حققت ${score} من 10. لقد أثبت فهمك الحقيقي للدراسة وتم إصدار شهادة اعتمادك الموقعة رسمياً.`);
                 window.scrollTo({ top: certBox.offsetTop, behavior: 'smooth' });
             } else {
                 certBox.style.display = 'none';
-                alert(`عذراً، نتيجتك هي ${score} من 10. يلزمك الحصول على 6 إجابات صحيحة على الأقل للحصول على الشهادة. راجع الدراسة وحاول مرة أخرى!`);
+                alert(`نصيبك من الإجابات الصحيحة هو ${score} من 10. للأسف لم تتجاوز حد النجاح (6 من 10). راجع الدراسة بعناية وحاول مرة أخرى لتحصل على الشهادة!`);
             }
         }
     </script>
